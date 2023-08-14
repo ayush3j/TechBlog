@@ -2,7 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.sql.*"%>
-
+<%@page import="com.tech.blog.dao.PostDao"%>
+<%@page import="com.tech.blog.helper.ConnectionProvider"%>
+<%@page import="java.util.*"%>
+<%@page import="com.tech.blog.entities.Post"%>
+<% 
+PostDao d = new PostDao(ConnectionProvider.getConnection());
+List<Post> list=d.getPostLimit();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,33 +42,34 @@
 			<div class="jumbotron">
 				<h3 class="display-3">Welcome to TechBlog</h3>
 				<h3>Welcome to technical blog, word of technology</h3>
-				<p>Lorem Ipsum is simply dummy text of the printing and
-					typesetting industry. Lorem Ipsum has been the industry's standard
-					dummy text ever since the 1500s, when an unknown printer took a
-					galley of type and scrambled it to make a type specimen book. It
-					has survived not only five centuries, but also the leap into
-					electronic typesetting, remaining essentially unchanged.</p>
-				<button class="btn btn-outline-light">
-					<span class="	fa fa-external-link"></span> Start ! its free
-				</button>
+				<p> Techblog  serves the purpose of providing a
+					platform for sharing information, insights, news, and updates
+					related to technology and its various facets. Its primary goal is
+					to educate, inform, and engage a tech-savvy audience, as well as
+					individuals who are interested in staying updated on the latest
+					technological advancements and trends. The website typically covers
+					a wide range of topics within the realm of technology,</p>
+					
 				<a href="loginPage.jsp" class="btn btn-outline-light"><span
 					class="	fa fa-user-circle-o"></span> Login </a>
+					<a class="btn btn-outline-light" aria-current="page" href="registerPage.jsp"><span class="fa fa-user-plus"></span> SignUp </a>
 			</div>
 		</div>
 	</div>
 
 	<div class="container">
 		<div class="row mt-2">
+		<% for(Post p:list){ %>
 			<div class="col-md-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Java</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background">Go somewhere</a>
+						<h5 class="card-title"><%=p.getpTitle() %></h5>
+						<p class="card-text"><%=p.getpContent() %></p>
+						<a href="profile.jsp" class="btn primary-background">Go somewhere</a>
 					</div>
 				</div>
 			</div>
+			<%} %>
 		</div>
 	</div>
 

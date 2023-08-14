@@ -161,4 +161,31 @@ public class PostDao {
 		}
 		return user;
 	}
+	public List<Post> getPostLimit() {
+		List<Post> list = new ArrayList<>();
+		try {
+			PreparedStatement p = con.prepareStatement("select * from posts order by pid desc limit 3");
+
+			ResultSet set = p.executeQuery();
+
+			while (set.next()) {
+
+				int pid = set.getInt("pid");
+				String pTitle = set.getString("pTitle");
+				String pContent = set.getString("pContent");
+				String pCode = set.getString("pCode");
+				String pPic = set.getString("pPic");
+				Timestamp date = set.getTimestamp("pDate");
+				int catId = set.getInt("catId");
+				int userId = set.getInt("userId");
+				Post post = new Post(pid, pTitle, pContent, pCode, pPic, date, catId, userId);
+
+				list.add(post);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 }
